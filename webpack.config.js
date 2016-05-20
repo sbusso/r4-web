@@ -1,5 +1,5 @@
 module.exports = {
-  entry:  './app',
+  entry:  './app/index.jsx',
   output: {
     path:     'builds',
     filename: 'bundle.js',
@@ -13,4 +13,4 @@ module.exports = {
       }
     ]
   }
-};
+}
