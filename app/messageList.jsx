@@ -11,7 +11,6 @@ const MessageList = ({messages}) => (
 )
 
 const mapProps = (state) => {
-  console.log(state)
   return {
     messages: state.messages
   }
