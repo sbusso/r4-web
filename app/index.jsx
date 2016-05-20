@@ -6,10 +6,7 @@ import { Provider  } from 'react-redux'
 import App from './app'
 import { loadMessages } from './actions'
 
-let store = createStore(reducer)
-store.dispatch(loadMessages('this is a new message'))
-store.dispatch(loadMessages('this is a new message'))
-store.dispatch(loadMessages('this is a new message'))
+let store = createStore(reducer, {}, window.devToolsExtension ? window.devToolsExtension() : undefined)
 
 render(
   <Provider store={store}>
