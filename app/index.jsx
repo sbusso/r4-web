@@ -1,10 +1,19 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { createStore } from 'redux'
+import reducer from './reducer'
+import { Provider  } from 'react-redux'
+import App from './app'
+import { loadMessages } from './actions'
 
-class App extends React.Component {
-  render() {
-    return <p>This is a message</p>
-  }
-}
+let store = createStore(reducer)
+store.dispatch(loadMessages('this is a new message'))
+store.dispatch(loadMessages('this is a new message'))
+store.dispatch(loadMessages('this is a new message'))
 
-render(<App />, document.getElementById('app'))
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>, 
+  document.getElementById('root')
+)
