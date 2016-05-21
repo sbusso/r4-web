@@ -7,9 +7,9 @@ import { loadMessages } from './actions'
 import ActionCable from 'actioncable'
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import App from './app'
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
-import MessageList from './MessageList'
+import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
+import MessageList from './components/MessageList'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 // Needed for onTouchTap - http://stackoverflow.com/a/34015469/988941 
@@ -37,3 +37,5 @@ var subscription = consumer.subscriptions.create('MessagesChannel', {
     store.dispatch(loadMessages(data.message.new_val.content))
   }
 })
+//TODO
+//Downstream to listen for success registration
