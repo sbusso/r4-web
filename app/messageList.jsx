@@ -12,14 +12,10 @@ const MessageList = ({messages}) => (
   </List>
 )
 
-const mapProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     messages: state.messages
   }
 }
 
-const mapDispatch = (dispatch) => {
-  return {}
-}
-
-export default connect(mapProps, mapDispatch)(MessageList)
+export default connect(mapStateToProps)(MessageList)
