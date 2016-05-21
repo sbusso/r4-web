@@ -1,13 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Message from './message'
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 const MessageList = ({messages}) => (
-  <ul>
-  {messages.map((message, n) =>
-      <p key={n}>{message}</p>
-      )}
-  </ul>
+  <List>
+    <Subheader>Chat</Subheader>
+    {messages.map((message, n) =>
+      <ListItem key={n} primaryText={message} />
+    )}
+  </List>
 )
 
 const mapProps = (state) => {

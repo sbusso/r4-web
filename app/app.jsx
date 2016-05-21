@@ -1,8 +1,12 @@
 import React from 'react'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MessageList from './messageList'
 
 const App = () => (
-  <MessageList />
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <MessageList />
+  </MuiThemeProvider>
 )
 
 export default App

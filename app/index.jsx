@@ -7,6 +7,10 @@ import App from './app'
 import { loadMessages } from './actions'
 import ActionCable from 'actioncable'
 
+import injectTapEventPlugin from 'react-tap-event-plugin'
+// Needed for onTouchTap - http://stackoverflow.com/a/34015469/988941 
+injectTapEventPlugin()
+
 let store = createStore(reducer, {}, window.devToolsExtension ? window.devToolsExtension() : undefined)
 
 render(
