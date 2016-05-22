@@ -7,7 +7,7 @@ import { loadMessages } from './actions'
 import ActionCable from 'actioncable'
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import App from './app'
-import LoginForm from './components/LoginForm'
+import LoginContainer from './containers/Login'
 import RegisterContainer from './containers/Register'
 import MessageList from './components/MessageList'
 
@@ -22,7 +22,7 @@ render(
     <Router history={hashHistory}>
       <Route path='/' component={App}>
         <IndexRoute component={MessageList} />
-        <Route path='/login' component={LoginForm} />
+        <Route path='/login' component={LoginContainer} />
         <Route path='/register' component={RegisterContainer} />
         <Route path='/chat' component={MessageList} />
       </Route>
