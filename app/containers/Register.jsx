@@ -8,13 +8,13 @@ import LoadingScreen from '../components/LoadingScreen'
 class Register extends React.Component {
   componentDidMount() {
     this.subscription = websocket.subscriptions.create('UsersChannel', {
-      received: (data) => {
-        if (data.operation === 'createUser') {
-          switch (data.status) {
+      received: (response) => {
+        if (response.operation === 'create') {
+          switch (response.status) {
             case 'success':
-              return this.props.dispatch(createUserSuccess(data.response))
-            case 'failed':
-              return this.props.dispatch(createUserFailed(data.response))
+              return this.props.dispatch(createUserSuccess(response.data))
+            case 'fail':
+              return this.props.dispatch(createUserFailed(response.data))
             default:
               // do nothing
           }
@@ -28,23 +28,21 @@ class Register extends React.Component {
   }
 
   createUser(params) {
-    this.subscription.perform('createUser', params)
+    this.subscription.perform('create', params)
     this.props.dispatch(createUser())
   }
 
   render() {
-    const { isFetching, status, response, errors  } = this.props
+    const { isFetching, status, data } = this.props
 
     if (isFetching) {
       return <LoadingScreen />
     } else if (status === 'success') {
-      return <h1>{response}</h1>
+      return <h1>{JSON.stringify(data)}</h1>
     } else {
       return (
         <div>
-        {status === 'failed' && errors.map((error, index) => {
-          return <p key={index}>{error}</p>
-        })}
+          {status === 'fail' && JSON.stringify(data)}
           <RegisterForm createUser={this.createUser.bind(this)} />
         </div>
       )
@@ -55,8 +53,7 @@ class Register extends React.Component {
 Register.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   status: PropTypes.string,
-  response: PropTypes.string,
-  errors: PropTypes.array
+  data: PropTypes.object
 }
 
 function mapStateToProps(state) {

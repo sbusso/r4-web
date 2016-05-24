@@ -8,13 +8,16 @@ import { loginUser, loginUserSuccess, loginUserFailed } from '../actions'
 class Login extends React.Component {
   componentDidMount() {
     this.subscription = websocket.subscriptions.create('UsersChannel', {
-      received: (data) => {
-        if (data.operation === 'loginUser') {
-          switch(data.status) {
+      received: (response) => {
+        if (response.operation === 'login') {
+          switch(response.status) {
             case 'success':
-              return this.props.dispatch(loginUserSuccess(data.response.token))
-            case 'failed':
-              return this.props.dispatch(loginUserFailed(data.response))
+              document.cookie = `token=${response.data.token}`
+              websocket.disconnect()
+              websocket.connect()
+              return this.props.dispatch(loginUserSuccess(response.data))
+            case 'fail':
+              return this.props.dispatch(loginUserFailed(response.data))
           }
         }
       }
@@ -26,12 +29,12 @@ class Login extends React.Component {
   }
 
   loginUser(email, password) {
-    this.subscription.perform('loginUser', {email: email, password: password})
+    this.subscription.perform('login', {email: email, password: password})
     this.props.dispatch(loginUser())
   }
 
   render() {
-    const { isFetching, status, token, error } = this.props
+    const { isFetching, status, token, data } = this.props
 
     if (isFetching) {
       return <LoadingScreen />
@@ -40,7 +43,7 @@ class Login extends React.Component {
     } else {
       return (
         <div>
-          {status === 'failed' && <p>{error}</p>}
+          {status === 'fail' && <p>{JSON.stringify(data)}</p>}
           <LoginForm loginUser={this.loginUser.bind(this)} />
         </div>
       )
@@ -52,7 +55,7 @@ Login.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   status: PropTypes.string,
   token: PropTypes.string,
-  error: PropTypes.string
+  data: PropTypes.object
 }
 
 function mapStateToProps(state) {

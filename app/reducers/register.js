@@ -15,7 +15,7 @@ export default function register(state={isFetching: false}, action) {
         {
           isFetching: false,
           status: 'success',
-          response: action.response
+          data: action.data
         }
       )
     case CREATE_USER_FAILED:
@@ -23,8 +23,8 @@ export default function register(state={isFetching: false}, action) {
         ...state,
         {
           isFetching: false,
-          status: 'failed',
-          errors: action.response
+          status: 'fail',
+          data: action.data
         }
       )
     default:

@@ -15,7 +15,7 @@ export default function(state = {isFetching: false}, action) {
         {
           isFetching: false,
           status: 'success',
-          token: action.token
+          token: action.data.token
         }
       )
     case LOGIN_USER_FAILED:
@@ -23,8 +23,8 @@ export default function(state = {isFetching: false}, action) {
         ...state,
         {
           isFetching: false,
-          status: 'failed',
-          error: action.response
+          status: 'fail',
+          data: action.data
         }
       )
     default:
